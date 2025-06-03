@@ -1,0 +1,9 @@
+.reveal .slide-logo {
+  position: fixed !important;
+    height: unset !important;
+    width: 10% !important;
+    max-width: unset !important;
+    max-height: unset !important;
+    top: 0px  !important;
+    left: 12px !important;
+  }

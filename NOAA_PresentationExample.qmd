@@ -1,0 +1,271 @@
+---
+title: ""
+format: 
+  revealjs:
+    theme: [default, customizations/presentation-custom.scss]
+    logo: static/noaa-fisheries-logo.png
+    css: customizations/logo.css
+    slide-number: true
+    cap-location: top
+    smaller: true
+    plugins: [mermaid]
+    mermaid:
+      format: svg
+embed-resources: true
+params: 
+  endyr: 2025
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+#  {.center}
+
+::: {.titlebox style="text-align:center; font-size: 1.25em;"}
+[Pelagic Fish Data Report `r params$endyr`]{.blue-title}
+
+[Pacific Islands Fisheries Science Center]{.blue
+style="font-size:0.5em;"} <br> [Fisheries Research and Monitoring
+Division]{.blue style="font-size:0.5em;"}
+:::
+
+<!---This is how to add comments to a quarto file--->
+
+## Vessels by Fleet
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 5.5
+#| fig-width: 9
+
+source(file.path("graphs.r"))
+vessels_by_fleet
+
+```
+
+## Catch by Fleet in Metric Tons
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-width: 13.5
+#| fig-height: 7.5
+
+totals_by_fleet
+
+```
+
+## Catch by Species in Metric Tons
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-width: 18
+#| fig-height: 10
+
+totals_by_species
+
+```
+
+::: key
+Species key: ALB = albacore, ALV = common thresher shark, BET = bigeye
+tuna, BIL = other billfish, BSH = blue shark, BTH = bigeye thresher
+shark, BUM = blue marlin, MLS = striped marlin, PBF = Pacific bluefin
+tuna, PTH = pelagic thresher shark, SKH = other sharks, SKJ = skipjack
+tuna, SMA = shortfin mako shark, SWO = swordfish, TUN = other tunas, YFT
+= yellowfin tuna
+:::
+
+## Relative Frequency of Catch [(2020–2024)]{.fragment data-fragment-index="1" style="font-size: 25px;"}
+
+::::: r-stack
+::: {.fragment .fade-out fragment-index="1"}
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 10
+#| fig-width: 18
+
+frequency_by_fishery
+
+```
+:::
+
+::: {.fragment .fade-in fragment-index="1"}
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 10
+#| fig-width: 18
+
+recent_frequency_by_fishery
+
+```
+:::
+:::::
+
+::: key
+Species key: ALB = albacore, BET = bigeye tuna, BSH = blue shark, BUM =
+blue marlin, MLS = striped marlin, PBF = Pacific bluefin tuna, SKJ =
+skipjack tuna, SMA = shortfin mako shark, SWO = swordfish, YFT =
+yellowfin tuna
+:::
+
+## Relative Frequency of Catch [(2020–2024)]{.fragment data-fragment-index="1" style="font-size: 25px;"}
+
+::::: r-stack
+::: {.fragment .fade-out fragment-index="1"}
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 10
+#| fig-width: 18
+
+frequency_by_species
+
+```
+:::
+
+::: {.fragment .fade-in fragment-index="1"}
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 10
+#| fig-width: 18
+
+recent_frequency_by_species
+
+```
+:::
+:::::
+
+::: key
+Species key: ALB = albacore, BET = bigeye tuna, BSH = blue shark, BUM =
+blue marlin, MLS = striped marlin, PBF = Pacific bluefin tuna, SKJ =
+skipjack tuna, SMA = shortfin mako shark, SWO = swordfish, YFT =
+yellowfin tuna
+:::
+
+## Longline Catch
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 7.5
+#| fig-width: 13.5
+
+longline_prop
+```
+
+## Purse Seine Catch
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 7.5
+#| fig-width: 13.5
+
+purse_seine_prop
+
+```
+
+## Tropical Troll Catch
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 7.5
+#| fig-width: 13.5
+
+tropical_troll_prop
+
+```
+
+## Sport Catch
+:::::{.columns}
+
+::: {.column width="75%"}
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 7
+#| fig-width: 8.5
+
+sport_prop
+
+```
+:::
+
+::: {.column width="25%" .scroll .no-stretch}
+
+```{r}
+#| echo: false
+
+sport_table %>% gt() %>%
+  fmt_number(columns = !contains("Year"), decimals = 0) %>% 
+  cols_align("center", everything()) %>%
+  tab_style(
+    style = cell_text(size = px(10), weight = "bold", align = "center"),
+    locations = cells_column_labels()
+  ) %>% 
+  tab_style(
+    style = cell_text(size = px(10), align = "right"),
+    locations = cells_body()
+  ) 
+```
+:::
+
+::: key
+Species key: ALB = albacore, MLS = striped marlin, PBF = pacific bluefin tuna, YFT = yellowfin tuna
+:::
+
+:::::
+
+<!--- This slide put two figures side by side--->
+
+## Pacific Longline Catch {visibility="hidden"}
+
+```{r}
+#| eval: FALSE
+#| echo: FALSE
+#| layout-ncol: 2
+#| fig-width: 6
+#| fig-height: 4
+
+LLTuna_Figure
+
+LLBILL_Figure
+```
+
+<!---This slide puts a figure and table next to each other--->
+
+## Skipjack Pole and Line Catch {visbility="hidden"}
+
+::: {layout="[80,20]"}
+```{r}
+#| eval: FALSE
+#| echo: FALSE
+SKJPL_Figure
+```
+
+```{r}
+#| eval: FALSE
+#| echo: FALSE
+names(SKJPL_Catch)[1]<-"Year"
+SKJPL_Catch %>% gt() %>%
+  fmt_number(columns = where(is.numeric),
+  decimals = 0, 
+  use_seps=TRUE) %>%
+  tab_style(
+    style = cell_text(size = px(20)),  
+    locations = cells_body()  # Apply to all body cells
+  ) %>%
+  tab_style(
+    style = cell_text(size = px(20), weight = "bold"),
+    locations = cells_column_labels()  # Apply to header cells
+  )
+
+```
+:::
