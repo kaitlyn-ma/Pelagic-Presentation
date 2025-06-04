@@ -534,7 +534,7 @@ bluefin_prop <- ggplot(bluefin, aes(x=FISHERY.YEAR, y=prop, fill=Fishery)) +
   )
 
 # Area plot for all species
-total_vessels <- c("ALB Troll and PL", "Longline", "Purse Seine", "Sport", "Tropical PL", "Tropical Troll")
+total_vessels <- c("ALB Troll and PL", "Longline", "Purse Seine", "Sport", "Tropical Troll")
 
 all_species <- individual_catch %>% filter(species=="TOTAL") %>% 
   select(-3)
@@ -566,8 +566,14 @@ all_species_prop <- ggplot(all_species, aes(x=FISHERY.YEAR, y=prop, fill=Fishery
     legend.margin = margin(0, 0, 0, -15)
   )
 
-#all_species_table <- all_catch %>% filter(Fishery %in% total_vessels) %>%
+all_species_table <- all_catch %>% filter(Fishery %in% total_vessels) %>%
   #filter(Fishery != "Tropical PL") %>% 
   #select(FISHERY.YEAR, TOTAL)
 
 #colnames(all_species_table) <- c("Year", "ALB", "Longline", "Purse Seine", "Sport", "Tropical Troll")
+  
+  purse_seine_table <- all_catch %>% filter(Fishery == "Purse Seine") %>% 
+  select(FISHERY.YEAR, !!purse_seine_species, TOTAL) %>% 
+  arrange(desc(FISHERY.YEAR))
+
+colnames(purse_seine_table) <- c("Year", "ALB", "BET", "PBF", "SKJ", "YFT", "Total")

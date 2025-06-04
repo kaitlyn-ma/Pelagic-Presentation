@@ -225,11 +225,11 @@ tropical_troll_table %>% gt() %>%
   fmt_number(columns = !contains("Year"), decimals=0) %>% 
   cols_align("center", everything()) %>%
   tab_style(
-    style = cell_text(size = px(12), weight = "bold", align = "center"),
+    style = cell_text(size = px(13), weight = "bold", align = "center"),
     locations = cells_column_labels()
   ) %>% 
   tab_style(
-    style = cell_text(size = px(12), align = "right"),
+    style = cell_text(size = px(13), align = "right"),
     locations = cells_body()
   ) 
 ```
