@@ -334,6 +334,11 @@ longline_prop <- ggplot(longline, aes(x=FISHERY.YEAR, y=prop, fill=species)) +
     legend.margin = margin(0, 0, 0, -15)
   )
 
+#longline_table <- all_catch %>% filter(Fishery == "Longline") %>% 
+ # select(FISHERY.YEAR, !!longline_species, TOTAL)
+
+#colnames(longline_table) <- c("Year", "ALB", "BET", "BUM", "MLS", "SWO", "YFT", "Total")
+
 
 # Area plot for Purse Seine
 purse_seine_species <- c("YFT", "SKJ", "PBF", "BET", "ALB")
@@ -372,6 +377,12 @@ purse_seine_prop <- ggplot(purse_seine, aes(x=FISHERY.YEAR, y=prop, fill=species
     legend.margin = margin(0, 0, 0, -15)
   )
 
+purse_seine_table <- all_catch %>% filter(Fishery == "Purse Seine") %>% 
+  select(FISHERY.YEAR, !!purse_seine_species, TOTAL) %>% 
+  arrange(desc(FISHERY.YEAR))
+
+colnames(purse_seine_table) <- c("Year", "ALB", "BET", "PBF", "SKJ", "YFT", "Total")
+
 # Area plot for Tropical Troll
 tropical_troll_species <- c("ALB", "BET", "BUM", "SKJ", "YFT")
 
@@ -407,6 +418,12 @@ tropical_troll_prop <- ggplot(tropical_troll, aes(x=FISHERY.YEAR, y=prop, fill=s
     legend.margin = margin(0, 0, 0, -15)
   )
 
+tropical_troll_table <- all_catch %>% filter(Fishery == "Tropical Troll") %>% 
+  select(FISHERY.YEAR, !!tropical_troll_species, TOTAL) %>% 
+  arrange(desc(FISHERY.YEAR))
+
+colnames(tropical_troll_table) <- c("Year", "ALB", "BET", "BUM", "SKJ", "YFT", "Total")
+
 # Area plot for Sport
 sport_species <- c("ALB", "MLS", "PBF", "YFT")
 
@@ -424,10 +441,10 @@ sport <- sport %>% left_join(yearly_totals, by="FISHERY.YEAR") %>%
   filter(species %in% sport_species)
 
 sport_table <- all_catch %>% filter(Fishery == "Sport") %>% 
-  select(FISHERY.YEAR, !!sport_species, TOTAL)
+  select(FISHERY.YEAR, !!sport_species, TOTAL) %>% 
+  arrange(desc(FISHERY.YEAR))
 
 colnames(sport_table) <- c("Year", "ALB", "MLS", "PBF", "YFT", "Total")
-  
 
 mako <- mako(5)[-1]
 
@@ -450,4 +467,107 @@ sport_prop <- ggplot(sport, aes(x=FISHERY.YEAR, y=prop, fill=species)) +
     legend.margin = margin(0, 0, 0, -15)
   )
 
-# Area plot for species
+# Area plot for yellowfin tuna
+yellowfin_vessels <- c("Longline", "Purse Seine", "Sport", "Tropical PL", "Tropical Troll")
+
+yellowfin <- individual_catch %>% filter(species=="YFT") %>% 
+  select(-3)
+  
+yearly_totals <- individual_catch %>% filter(species == "YFT") %>% 
+  group_by(FISHERY.YEAR) %>% 
+  summarise(yellowfin_total = sum(catch, na.rm=TRUE), .groups="drop")
+
+yellowfin <- yellowfin %>% left_join(yearly_totals, by="FISHERY.YEAR") %>% 
+  mutate(prop = catch/yellowfin_total) %>% 
+  filter(Fishery %in% yellowfin_vessels) 
+
+yellowfin_prop <- ggplot(yellowfin, aes(x=FISHERY.YEAR, y=prop, fill=Fishery)) +
+  geom_area(color="white", alpha=0.75, linewidth=0.6) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme_minimal() +
+  labs(
+    x = "Year",
+    y = "Proportion of Total Catch",
+    fill = "Fishery"
+  ) +
+  theme(
+    plot.margin = margin(10, 10, 10, 10),
+    legend.box.spacing = unit(5, "points"),
+    axis.text.x = element_text(vjust = 0, size=10),
+    axis.text.y = element_text(hjust = 0, size=10),
+    axis.title.x = element_text(face="bold", size=12, margin=margin(t=5)),
+    axis.title.y = element_text(face="bold", size=12, margin=margin(r=10)),
+    legend.margin = margin(0, 0, 0, -15)
+  )
+
+# Area plot for pacific bluefin tuna
+bluefin_vessels <- c("Gillnet", "Other", "Purse Seine", "Sport", "Surface hook and line")
+
+bluefin <- individual_catch %>% filter(species=="PBF") %>% 
+  select(-3)
+
+yearly_totals <- individual_catch %>% filter(species == "PBF") %>% 
+  group_by(FISHERY.YEAR) %>% 
+  summarise(bluefin_total = sum(catch, na.rm=TRUE), .groups="drop")
+
+bluefin <- bluefin %>% left_join(yearly_totals, by="FISHERY.YEAR") %>% 
+  mutate(prop = catch/bluefin_total) %>% 
+  filter(Fishery %in% bluefin_vessels) 
+
+bluefin_prop <- ggplot(bluefin, aes(x=FISHERY.YEAR, y=prop, fill=Fishery)) +
+  geom_area(color="white", alpha=0.75, linewidth=0.6) +
+  scale_fill_viridis(discrete = TRUE, option = "plasma") +
+  theme_minimal() +
+  labs(
+    x = "Year",
+    y = "Proportion of Total Catch",
+    fill = "Fishery"
+  ) +
+  theme(
+    plot.margin = margin(10, 10, 10, 10),
+    legend.box.spacing = unit(5, "points"),
+    axis.text.x = element_text(vjust = 0, size=10),
+    axis.text.y = element_text(hjust = 0, size=10),
+    axis.title.x = element_text(face="bold", size=12, margin=margin(t=5)),
+    axis.title.y = element_text(face="bold", size=12, margin=margin(r=10)),
+    legend.margin = margin(0, 0, 0, -15)
+  )
+
+# Area plot for all species
+total_vessels <- c("ALB Troll and PL", "Longline", "Purse Seine", "Sport", "Tropical PL", "Tropical Troll")
+
+all_species <- individual_catch %>% filter(species=="TOTAL") %>% 
+  select(-3)
+
+yearly_totals <- individual_catch %>% filter(species == "TOTAL") %>% 
+  group_by(FISHERY.YEAR) %>% 
+  summarise(all_species_total = sum(catch, na.rm=TRUE), .groups="drop")
+
+all_species <- all_species %>% left_join(yearly_totals, by="FISHERY.YEAR") %>% 
+  mutate(prop = catch/all_species_total) %>% 
+  filter(Fishery %in% total_vessels) 
+
+all_species_prop <- ggplot(all_species, aes(x=FISHERY.YEAR, y=prop, fill=Fishery)) +
+  geom_area(color="white", alpha=0.75, linewidth=0.6) +
+  scale_fill_viridis(discrete = TRUE, option = "mako") +
+  theme_minimal() +
+  labs(
+    x = "Year",
+    y = "Proportion of Total Catch",
+    fill = "Fishery"
+  ) +
+  theme(
+    plot.margin = margin(10, 10, 10, 10),
+    legend.box.spacing = unit(5, "points"),
+    axis.text.x = element_text(vjust = 0, size=10),
+    axis.text.y = element_text(hjust = 0, size=10),
+    axis.title.x = element_text(face="bold", size=12, margin=margin(t=5)),
+    axis.title.y = element_text(face="bold", size=12, margin=margin(r=10)),
+    legend.margin = margin(0, 0, 0, -15)
+  )
+
+#all_species_table <- all_catch %>% filter(Fishery %in% total_vessels) %>%
+  #filter(Fishery != "Tropical PL") %>% 
+  #select(FISHERY.YEAR, TOTAL)
+
+#colnames(all_species_table) <- c("Year", "ALB", "Longline", "Purse Seine", "Sport", "Tropical Troll")
