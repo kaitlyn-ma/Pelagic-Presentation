@@ -237,8 +237,7 @@ tropical_troll_table %>% gt() %>%
 :::::
 
 ::: key
-Species key: ALB = albacore, BET = bigeye tuna, PBF = pacific bluefin
-tuna, YFT = yellowfin tuna
+Species key: ALB = albacore, BET = bigeye tuna, BUM = blue marlin, SKJ = skipjack tuna, YFT = yellowfin tuna
 :::
 
 ## Sport Catch
