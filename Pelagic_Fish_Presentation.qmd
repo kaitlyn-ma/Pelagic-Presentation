@@ -167,14 +167,40 @@ yellowfin tuna
 
 ## Longline Catch
 
+::::: columns
+::: {.column width="72%"}
 ```{r}
 #| echo: false
 #| warning: false
-#| fig-height: 7.5
-#| fig-width: 13.5
+#| fig-height: 7
+#| fig-width: 8.5
 
 longline_prop
 ```
+:::
+::: {.column .scroll width="28%"}
+```{r}
+#| echo: false
+
+longline_table %>% gt() %>%
+  fmt_number(columns = !contains("Year"), decimals=0) %>% 
+  fmt_number(columns = contains(c("ALB", "BET", "BUM", "MLS", "SWO", "YFT", "Total")), suffixing=TRUE, n_sigfig=3) %>% 
+  cols_align("center", everything()) %>%
+  tab_style(
+    style = cell_text(size = px(10), weight = "bold", align = "center"),
+    locations = cells_column_labels()
+  ) %>% 
+  tab_style(
+    style = cell_text(size = px(10), align = "right"),
+    locations = cells_body()
+  ) 
+```
+:::
+:::::
+
+::: key
+Species key: ALB = albacore, BET = bigeye tuna, BUM = blue marlin, MLS = striped marlin, SWO = swordfish, YFT = yellowfin tuna
+:::
 
 ## Purse Seine Catch
 
@@ -206,13 +232,7 @@ purse_seine_table %>% gt() %>%
   tab_style(
     style = cell_text(size = px(12), align = "right"),
     locations = cells_body()
-  ) #%>% 
-  #cols_width(
-   # contains("Total") ~ px(40)
-  #) %>% 
-  #cols_width(
-   # contains("Year") ~ px(35)
-  #)
+  ) 
 ```
 :::
 :::::

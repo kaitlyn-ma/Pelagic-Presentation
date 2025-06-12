@@ -334,11 +334,11 @@ longline_prop <- ggplot(longline, aes(x=FISHERY.YEAR, y=prop, fill=species)) +
     legend.margin = margin(0, 0, 0, -15)
   )
 
-#longline_table <- all_catch %>% filter(Fishery == "Longline") %>% 
- # select(FISHERY.YEAR, !!longline_species, TOTAL)
+longline_table <- all_catch %>% filter(Fishery == "Longline") %>% 
+  select(FISHERY.YEAR, !!longline_species, TOTAL) %>% 
+  arrange(desc(FISHERY.YEAR))
 
-#colnames(longline_table) <- c("Year", "ALB", "BET", "BUM", "MLS", "SWO", "YFT", "Total")
-
+colnames(longline_table) <- c("Year", "ALB", "BET", "BUM", "MLS", "SWO", "YFT", "Total")
 
 # Area plot for Purse Seine
 purse_seine_species <- c("YFT", "SKJ", "PBF", "BET", "ALB")
@@ -571,9 +571,3 @@ all_species_prop <- ggplot(all_species, aes(x=FISHERY.YEAR, y=prop, fill=Fishery
   #select(FISHERY.YEAR, TOTAL)
 
 #colnames(all_species_table) <- c("Year", "ALB", "Longline", "Purse Seine", "Sport", "Tropical Troll")
-  
-  purse_seine_table <- all_catch %>% filter(Fishery == "Purse Seine") %>% 
-  select(FISHERY.YEAR, !!purse_seine_species, TOTAL) %>% 
-  arrange(desc(FISHERY.YEAR))
-
-colnames(purse_seine_table) <- c("Year", "ALB", "BET", "PBF", "SKJ", "YFT", "Total")
