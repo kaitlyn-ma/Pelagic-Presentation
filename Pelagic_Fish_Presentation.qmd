@@ -31,6 +31,24 @@ Division]{.blue style="font-size:0.5em;"}
 
 <!---This is how to add comments to a quarto file--->
 
+## 
+
+::::: columns
+::: {.column width="50%" style="font-size: 1.5em"}
+\
+\
+\
+\
+
+Data represents U.S. fisheries in the North Pacific Ocean. Data for 2024
+are preliminary.
+:::
+
+::: column
+(map)
+:::
+:::::
+
 ## Vessels by Fleet
 
 ```{r}
@@ -158,10 +176,10 @@ yellowfin tuna
 longline_prop
 ```
 
-
 ## Purse Seine Catch
+
 ::::: columns
-:::{.column width="72%"}
+::: {.column width="72%"}
 ```{r}
 #| echo: false
 #| warning: false
@@ -173,7 +191,7 @@ purse_seine_prop
 ```
 :::
 
-:::{.column width="28%" .scroll}
+::: {.column .scroll width="28%"}
 ```{r}
 #| echo: false
 
@@ -200,12 +218,14 @@ purse_seine_table %>% gt() %>%
 :::::
 
 ::: key
-Species key: ALB = albacore, BET = bigeye tuna, PBF = pacific bluefin tuna, SKJ = skipjack tuna, YFT = yellowfin tuna
+Species key: ALB = albacore, BET = bigeye tuna, PBF = pacific bluefin
+tuna, SKJ = skipjack tuna, YFT = yellowfin tuna
 :::
 
 ## Tropical Troll Catch
+
 ::::: columns
-:::{.column width="72%"}
+::: {.column width="72%"}
 ```{r}
 #| echo: false
 #| warning: false
@@ -217,7 +237,7 @@ tropical_troll_prop
 ```
 :::
 
-:::{.column width="28%" .scroll}
+::: {.column .scroll width="28%"}
 ```{r}
 #| echo: false
 
@@ -237,7 +257,8 @@ tropical_troll_table %>% gt() %>%
 :::::
 
 ::: key
-Species key: ALB = albacore, BET = bigeye tuna, BUM = blue marlin, SKJ = skipjack tuna, YFT = yellowfin tuna
+Species key: ALB = albacore, BET = bigeye tuna, BUM = blue marlin, SKJ =
+skipjack tuna, YFT = yellowfin tuna
 :::
 
 ## Sport Catch
@@ -286,8 +307,9 @@ Species key: ALB = albacore, MLS = striped marlin, PBF = pacific bluefin
 tuna, YFT = yellowfin tuna
 :::
 
-::::: columns
+::: columns
 :::
+
 ## Yellowfin Tuna Catch
 
 ```{r}

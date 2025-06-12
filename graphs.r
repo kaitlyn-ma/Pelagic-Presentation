@@ -566,7 +566,7 @@ all_species_prop <- ggplot(all_species, aes(x=FISHERY.YEAR, y=prop, fill=Fishery
     legend.margin = margin(0, 0, 0, -15)
   )
 
-all_species_table <- all_catch %>% filter(Fishery %in% total_vessels) %>%
+#all_species_table <- all_catch %>% filter(Fishery %in% total_vessels) %>%
   #filter(Fishery != "Tropical PL") %>% 
   #select(FISHERY.YEAR, TOTAL)
 
